@@ -1,0 +1,219 @@
+
+-- AUTO ATOM MAX | RAYFIELD EDITION
+
+local Rayfield = loadstring(game:HttpGet(
+    "https://sirius.menu/rayfield"
+))()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local Player = Players.LocalPlayer
+
+-- WINDOW
+local Window = Rayfield:CreateWindow({
+    Name = "Auto Atom Max",
+    LoadingTitle = "Auto Atom Max",
+    LoadingSubtitle = "Rayfield Edition",
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = "RayConfig",
+        FileName = "AutoAtomMax"
+    },
+    Discord = {
+        Enabled = false
+    },
+    KeySystem = false
+})
+
+-- TABS
+local MainTab = Window:CreateTab("Main", 4483362458)
+local CombatTab = Window:CreateTab("Combat", 4483362458)
+local DungeonTab = Window:CreateTab("Dungeon", 4483362458)
+local MiscTab = Window:CreateTab("Misc", 4483362458)
+
+-- STATE
+local States = {
+    AutoRangeAtom = false,
+    AutoTrinh = false,
+    AutoDanhThuong = false,
+    AutoPhePha = false,
+    AutoEquipTools = false,
+    AutoNextArea = false,
+    AutoGodmode = false,
+    AutoStartDungeon = false,
+    AutoMode = false,
+    AutoLockAtom = false,
+    AutoRestartRaid = false
+}
+
+local SelectedTool = 2
+
+-- MAIN
+MainTab:CreateSection("Main Settings")
+
+MainTab:CreateLabel("Auto Atom Max")
+MainTab:CreateLabel("Rayfield interface loaded successfully")
+
+MainTab:CreateDropdown({
+    Name = "Selected Tool",
+    Options = {"1", "2", "3", "4", "5", "6"},
+    CurrentOption = {"2"},
+    Flag = "SelectedTool",
+    Callback = function(Options)
+        SelectedTool = tonumber(Options[1]) or 2
+    end
+})
+
+-- COMBAT
+CombatTab:CreateSection("Combat Settings")
+
+CombatTab:CreateToggle({
+    Name = "Auto Range Atom",
+    CurrentValue = false,
+    Flag = "AutoRangeAtom",
+    Callback = function(Value)
+        States.AutoRangeAtom = Value
+    end
+})
+
+CombatTab:CreateToggle({
+    Name = "Auto Trinh",
+    CurrentValue = false,
+    Flag = "AutoTrinh",
+    Callback = function(Value)
+        States.AutoTrinh = Value
+    end
+})
+
+CombatTab:CreateToggle({
+    Name = "Auto Danh Thuong",
+    CurrentValue = false,
+    Flag = "AutoDanhThuong",
+    Callback = function(Value)
+        States.AutoDanhThuong = Value
+    end
+})
+
+CombatTab:CreateToggle({
+    Name = "Auto Phe Pha V2",
+    CurrentValue = false,
+    Flag = "AutoPhePha",
+    Callback = function(Value)
+        States.AutoPhePha = Value
+    end
+})
+
+CombatTab:CreateToggle({
+    Name = "Auto Mode",
+    CurrentValue = false,
+    Flag = "AutoMode",
+    Callback = function(Value)
+        States.AutoMode = Value
+    end
+})
+
+CombatTab:CreateToggle({
+    Name = "Auto Lock Atom",
+    CurrentValue = false,
+    Flag = "AutoLockAtom",
+    Callback = function(Value)
+        States.AutoLockAtom = Value
+    end
+})
+
+-- DUNGEON
+DungeonTab:CreateSection("Dungeon Settings")
+
+DungeonTab:CreateToggle({
+    Name = "Auto Next Area",
+    CurrentValue = false,
+    Flag = "AutoNextArea",
+    Callback = function(Value)
+        States.AutoNextArea = Value
+    end
+})
+
+DungeonTab:CreateToggle({
+    Name = "Auto Start Dungeon",
+    CurrentValue = false,
+    Flag = "AutoStartDungeon",
+    Callback = function(Value)
+        States.AutoStartDungeon = Value
+    end
+})
+
+DungeonTab:CreateToggle({
+    Name = "Auto Restart Raid",
+    CurrentValue = false,
+    Flag = "AutoRestartRaid",
+    Callback = function(Value)
+        States.AutoRestartRaid = Value
+    end
+})
+
+-- MISC
+MiscTab:CreateSection("Miscellaneous")
+
+MiscTab:CreateToggle({
+    Name = "Auto Equip Tools",
+    CurrentValue = false,
+    Flag = "AutoEquipTools",
+    Callback = function(Value)
+        States.AutoEquipTools = Value
+    end
+})
+
+MiscTab:CreateSection("Character")
+
+MiscTab:CreateToggle({
+    Name = "Auto Skill + Godmode V2",
+    CurrentValue = false,
+    Flag = "AutoGodmode",
+    Callback = function(Value)
+        States.AutoGodmode = Value
+    end
+})
+
+-- GLOBAL CONTROLS
+MiscTab:CreateSection("Global Controls")
+
+MiscTab:CreateButton({
+    Name = "Stop All",
+    Callback = function()
+        for Name in pairs(States) do
+            States[Name] = false
+        end
+
+        Rayfield:Notify({
+            Title = "Auto Atom Max",
+            Content = "All feature states disabled.",
+            Duration = 4
+        })
+    end
+})
+
+MiscTab:CreateButton({
+    Name = "Show Status",
+    Callback = function()
+        local Active = 0
+
+        for _, Value in pairs(States) do
+            if Value then
+                Active += 1
+            end
+        end
+
+        Rayfield:Notify({
+            Title = "Script Status",
+            Content = tostring(Active) .. " features enabled.",
+            Duration = 4
+        })
+    end
+})
+
+Rayfield:Notify({
+    Title = "Auto Atom Max",
+    Content = "Rayfield interface loaded successfully!",
+    Duration = 5
+})
